@@ -1,3 +1,4 @@
+import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 
@@ -5,12 +6,13 @@ async function bootstrap() {
     try {
         const app = await NestFactory.create(AppModule);
 
-        const HOST = process.env.HOST || 'localhost';
+        app.setGlobalPrefix('api/v1');
+
         const PORT = process.env.PORT || 3000;
 
-        await app.listen(PORT).then(() => {
-            console.log(`http://${HOST}:${PORT}`);
-        });
+        await app.listen(PORT);
+
+        app.getUrl().then((url) => Logger.log(`App is running at ${url}`));
     } catch (err) {
         console.error(err.message);
     } finally {

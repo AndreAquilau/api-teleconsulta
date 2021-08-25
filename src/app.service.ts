@@ -3,6 +3,10 @@ import { Injectable } from '@nestjs/common';
 @Injectable()
 export class AppService {
     getStatus(): string {
-        return 'API Consulta Online!';
+        return JSON.stringify({
+            message: 'API Consulta Online',
+            status: 'OK',
+            statusCode: 200,
+        });
     }
 }
