@@ -12,11 +12,16 @@ async function bootstrap() {
 
         await app.listen(PORT);
 
-        app.getUrl().then((url) => Logger.log(`App is running at ${url}`));
+        app.getUrl().then((url) =>
+            Logger.log(`App is running at ${url}`, 'BaseUrl'),
+        );
     } catch (err) {
-        console.error(err.message);
+        Logger.error(err.message);
     } finally {
-        console.log('Server is running in ' + process.env.NODE_ENV + ' mode');
+        Logger.log(
+            'Server is running in ' + process.env.NODE_ENV + ' mode',
+            'StartingServer',
+        );
     }
 }
 bootstrap();
