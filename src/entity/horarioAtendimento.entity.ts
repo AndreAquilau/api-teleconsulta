@@ -5,7 +5,10 @@ import {
     PrimaryGeneratedColumn,
     UpdateDateColumn,
     CreateDateColumn,
+    ManyToOne,
+    JoinColumn,
 } from 'typeorm';
+import { Profissional } from './profissional.entity';
 
 @Index('pkey_id_horario_atendimento', ['id'], { unique: true })
 @Entity('horarioAtendimentos', { schema: 'public' })
@@ -33,6 +36,10 @@ export class HorarioAtendimento {
         nullable: true,
     })
     public horarioFim: string;
+
+    @ManyToOne(() => Profissional, () => HorarioAtendimento)
+    @JoinColumn([{ name: 'fk_id_profissional', referencedColumnName: 'id' }])
+    profissional: Profissional;
 
     @CreateDateColumn({
         name: 'created_At',

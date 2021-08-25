@@ -7,6 +7,7 @@ import {
     CreateDateColumn,
     OneToOne,
     JoinColumn,
+    OneToMany,
 } from 'typeorm';
 import { ConselhoRegional } from './conselhoRegional.entity';
 import { Endereco } from './endereco.entity';
@@ -85,6 +86,12 @@ export class Profissional {
     @OneToOne(() => UFConselho, () => Profissional, { eager: true })
     @JoinColumn([{ name: 'fk_id_uf_conselho', referencedColumnName: 'id' }])
     public ufConselho: UFConselho;
+
+    @OneToMany(() => HorarioAtendimento, () => Profissional, { eager: true })
+    @JoinColumn([
+        { name: 'fk_id_horario_atendimento', referencedColumnName: 'id' },
+    ])
+    horariosAtendimentos: HorarioAtendimento[];
 
     @CreateDateColumn({
         name: 'created_At',
