@@ -5,7 +5,11 @@ import {
     PrimaryGeneratedColumn,
     UpdateDateColumn,
     CreateDateColumn,
+    OneToOne,
+    JoinColumn,
 } from 'typeorm';
+import { Endereco } from './endereco.entity';
+import { Usuario } from './usuario.entity';
 
 @Index('pkey_id_cliente', ['id'], { unique: true })
 @Entity('clientes', { schema: 'public' })
@@ -60,6 +64,14 @@ export class Cliente {
         nullable: true,
     })
     public dataNascimento: string;
+
+    @OneToOne(() => Endereco, () => Cliente, { eager: true })
+    @JoinColumn([{ name: 'fk_id_endereco', referencedColumnName: 'id' }])
+    public endereco: Endereco;
+
+    @OneToOne(() => Usuario, () => Cliente, { eager: true })
+    @JoinColumn([{ name: 'fk_id_usuario', referencedColumnName: 'id' }])
+    public usuario: Usuario;
 
     @CreateDateColumn({
         name: 'created_At',
