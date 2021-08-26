@@ -62,11 +62,15 @@ export class Atendimento {
     public atendimentoFinalizado: boolean;
 
     @ManyToOne(() => Profissional, () => Atendimento)
-    @JoinColumn([{ name: 'fk_id_profissional', referencedColumnName: 'id' }])
+    @JoinColumn([
+        { name: 'fk_id_atendimento_profissional', referencedColumnName: 'id' },
+    ])
     profissional: Profissional;
 
     @ManyToOne(() => Cliente, () => Atendimento)
-    @JoinColumn([{ name: 'fk_id_profissional', referencedColumnName: 'id' }])
+    @JoinColumn([
+        { name: 'fk_id_profissional_cliente', referencedColumnName: 'id' },
+    ])
     cliente: Cliente;
 
     @CreateDateColumn({

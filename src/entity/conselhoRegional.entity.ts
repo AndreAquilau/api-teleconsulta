@@ -7,8 +7,8 @@ import {
     CreateDateColumn,
 } from 'typeorm';
 
-@Index('pkey_id_conselho', ['id'], { unique: true })
-@Entity('clientes', { schema: 'public' })
+@Index('pkey_id_conselho_regional', ['id'], { unique: true })
+@Entity('conselho_regionais', { schema: 'public' })
 export class ConselhoRegional {
     @PrimaryGeneratedColumn('increment')
     public id: number;

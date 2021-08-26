@@ -75,7 +75,9 @@ export class Cliente {
     public usuario: Usuario;
 
     @OneToMany(() => Atendimento, () => Cliente, { eager: true })
-    @JoinColumn([{ name: 'fk_id_atendimento', referencedColumnName: 'id' }])
+    @JoinColumn([
+        { name: 'fk_id_cliente_atendimento', referencedColumnName: 'id' },
+    ])
     atendimentos: Atendimento[];
 
     @CreateDateColumn({

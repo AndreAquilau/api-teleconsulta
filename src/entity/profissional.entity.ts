@@ -95,7 +95,9 @@ export class Profissional {
     horariosAtendimentos: HorarioAtendimento[];
 
     @OneToMany(() => Atendimento, () => Profissional, { eager: true })
-    @JoinColumn([{ name: 'fk_id_atendimento', referencedColumnName: 'id' }])
+    @JoinColumn([
+        { name: 'fk_id_profissional_atendimento', referencedColumnName: 'id' },
+    ])
     atendimentos: Atendimento[];
 
     @CreateDateColumn({
