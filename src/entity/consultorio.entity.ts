@@ -27,7 +27,7 @@ export class Consultorio {
     @Column({
         name: 'cnpj',
         type: 'varchar',
-        length: 255,
+        length: 20,
         nullable: true,
     })
     public cnpj: string;
@@ -35,7 +35,7 @@ export class Consultorio {
     @Column({
         name: 'cpf',
         type: 'varchar',
-        length: 255,
+        length: 20,
         nullable: true,
     })
     public cpf: string;
@@ -43,7 +43,7 @@ export class Consultorio {
     @Column({
         name: 'celular',
         type: 'varchar',
-        length: 255,
+        length: 20,
         nullable: true,
     })
     public celular: string;
@@ -51,7 +51,7 @@ export class Consultorio {
     @Column({
         name: 'telefone',
         type: 'varchar',
-        length: 255,
+        length: 20,
         nullable: true,
     })
     public telefone: string;

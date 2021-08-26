@@ -31,8 +31,7 @@ export class Endereco {
 
     @Column({
         name: 'numero',
-        type: 'varchar',
-        length: 255,
+        type: 'integer',
         nullable: true,
     })
     public numero: string;
@@ -55,7 +54,7 @@ export class Endereco {
     @Column({
         name: 'cidade',
         type: 'varchar',
-        length: 255,
+        length: 120,
         nullable: true,
     })
     public cidade: string;
@@ -63,7 +62,7 @@ export class Endereco {
     @Column({
         name: 'estado',
         type: 'varchar',
-        length: 255,
+        length: 120,
         nullable: true,
     })
     public estado: string;

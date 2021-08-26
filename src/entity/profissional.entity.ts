@@ -9,6 +9,7 @@ import {
     JoinColumn,
     OneToMany,
 } from 'typeorm';
+import { Atendimento } from './atendimento.entity';
 import { ConselhoRegional } from './conselhoRegional.entity';
 import { Endereco } from './endereco.entity';
 import { Especialidade } from './especialidade.entity';
@@ -33,7 +34,7 @@ export class Profissional {
     @Column({
         name: 'cpf',
         type: 'varchar',
-        length: 255,
+        length: 20,
         nullable: true,
     })
     public cpf: string;
@@ -92,6 +93,10 @@ export class Profissional {
         { name: 'fk_id_horario_atendimento', referencedColumnName: 'id' },
     ])
     horariosAtendimentos: HorarioAtendimento[];
+
+    @OneToMany(() => Atendimento, () => Profissional, { eager: true })
+    @JoinColumn([{ name: 'fk_id_atendimento', referencedColumnName: 'id' }])
+    atendimentos: Atendimento[];
 
     @CreateDateColumn({
         name: 'created_At',

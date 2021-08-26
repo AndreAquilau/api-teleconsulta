@@ -23,8 +23,7 @@ export class Especialidade {
 
     @Column({
         name: 'descricao',
-        type: 'varchar',
-        length: 255,
+        type: 'text',
         nullable: true,
     })
     public descricao: string;

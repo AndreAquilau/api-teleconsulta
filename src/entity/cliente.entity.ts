@@ -7,7 +7,9 @@ import {
     CreateDateColumn,
     OneToOne,
     JoinColumn,
+    OneToMany,
 } from 'typeorm';
+import { Atendimento } from './atendimento.entity';
 import { Endereco } from './endereco.entity';
 import { Usuario } from './usuario.entity';
 
@@ -28,7 +30,7 @@ export class Cliente {
     @Column({
         name: 'cpf',
         type: 'varchar',
-        length: 255,
+        length: 20,
         nullable: true,
     })
     public cpf: string;
@@ -36,7 +38,7 @@ export class Cliente {
     @Column({
         name: 'celular',
         type: 'varchar',
-        length: 255,
+        length: 20,
         nullable: true,
     })
     public celular: string;
@@ -44,7 +46,7 @@ export class Cliente {
     @Column({
         name: 'telefone',
         type: 'varchar',
-        length: 255,
+        length: 20,
         nullable: true,
     })
     public telefone: string;
@@ -59,11 +61,10 @@ export class Cliente {
 
     @Column({
         name: 'data_nascimento',
-        type: 'varchar',
-        length: 255,
+        type: 'date',
         nullable: true,
     })
-    public dataNascimento: string;
+    public dataNascimento: Date;
 
     @OneToOne(() => Endereco, () => Cliente, { eager: true })
     @JoinColumn([{ name: 'fk_id_endereco', referencedColumnName: 'id' }])
@@ -72,6 +73,10 @@ export class Cliente {
     @OneToOne(() => Usuario, () => Cliente, { eager: true })
     @JoinColumn([{ name: 'fk_id_usuario', referencedColumnName: 'id' }])
     public usuario: Usuario;
+
+    @OneToMany(() => Atendimento, () => Cliente, { eager: true })
+    @JoinColumn([{ name: 'fk_id_atendimento', referencedColumnName: 'id' }])
+    atendimentos: Atendimento[];
 
     @CreateDateColumn({
         name: 'created_At',
