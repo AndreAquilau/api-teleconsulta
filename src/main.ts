@@ -16,7 +16,7 @@ async function bootstrap() {
             Logger.log(`App is running at ${url}`, 'BaseUrl'),
         );
     } catch (err) {
-        Logger.error(err.message);
+        Logger.error(err.message, 'ExceptionStartingServer');
     } finally {
         Logger.log(
             'Server is running in ' + process.env.NODE_ENV + ' mode',

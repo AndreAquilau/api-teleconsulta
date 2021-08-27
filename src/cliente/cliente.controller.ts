@@ -6,13 +6,14 @@ import {
     Param,
     Post,
     Put,
-    Request,
-    Response,
     Req,
     Res,
+    HttpStatus,
+    HttpCode,
+    Logger,
 } from '@nestjs/common';
+import { Request, Response } from 'express';
 import { Observable } from 'rxjs';
-import { Cliente } from 'src/entity/cliente.entity';
 import { ClienteService } from './cliente.service';
 
 @Controller('clientes')
@@ -20,13 +21,28 @@ export class ClienteController {
     public constructor(private clienteService: ClienteService) {}
 
     @Get()
-    public async findAll() {
-        const cliente = await this.clienteService.findAll();
-        console.log(cliente);
-        return '';
+    public async findAll(@Req() request: Request, @Res() response: Response) {
+        try {
+            const clientes = await this.clienteService.findAll();
+
+            return response.status(HttpStatus.OK).json(clientes);
+        } catch (ex) {
+            response.status(HttpStatus.EXPECTATION_FAILED);
+
+            return response.json({
+                statusCode: response.statusCode,
+                message: ex.message,
+            });
+        } finally {
+            Logger.log(
+                `${request.url}`,
+                `Request Cliente ${response.statusCode}`,
+            );
+        }
     }
+
     @Get(':id')
-    public findById(@Param('id') id: string): Observable<any> {
+    public findById(@Param('id') id: string) {
         throw new NotImplementedException();
     }
 
