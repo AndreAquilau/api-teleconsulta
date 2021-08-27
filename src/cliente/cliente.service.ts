@@ -1,4 +1,5 @@
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable, Inject, Logger } from '@nestjs/common';
+import { Observable } from 'rxjs';
 import { Repository } from 'typeorm';
 import { Cliente } from '../entity/cliente.entity';
 
@@ -9,7 +10,13 @@ export class ClienteService {
         private clienteRepository: Repository<Cliente>,
     ) {}
 
-    async findAll(): Promise<Cliente[]> {
-        return this.clienteRepository.find();
+    public async findAll(): Promise<Cliente[]> {
+        try {
+            const clientes = await this.clienteRepository.find();
+            console.log(clientes);
+            return clientes;
+        } finally {
+            Logger.log('get cleintes');
+        }
     }
 }

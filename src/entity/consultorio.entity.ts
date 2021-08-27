@@ -56,10 +56,6 @@ export class Consultorio {
     })
     public telefone: string;
 
-    @OneToOne(() => Endereco, () => Consultorio, { eager: true })
-    @JoinColumn([{ name: 'fk_id_endereco', referencedColumnName: 'id' }])
-    public endereco: Endereco;
-
     @CreateDateColumn({
         name: 'created_At',
         type: 'timestamp',

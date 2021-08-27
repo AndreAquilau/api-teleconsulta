@@ -5,7 +5,10 @@ import {
     PrimaryGeneratedColumn,
     UpdateDateColumn,
     CreateDateColumn,
+    OneToOne,
+    JoinColumn,
 } from 'typeorm';
+import { Cliente } from './cliente.entity';
 
 @Index('pkey_id_endereco', ['id'], { unique: true })
 @Entity('enderecos', { schema: 'public' })
@@ -66,6 +69,14 @@ export class Endereco {
         nullable: true,
     })
     public estado: string;
+
+    @Column({
+        name: 'uf',
+        type: 'char',
+        length: 2,
+        nullable: true,
+    })
+    public uf: string;
 
     @CreateDateColumn({
         name: 'created_At',

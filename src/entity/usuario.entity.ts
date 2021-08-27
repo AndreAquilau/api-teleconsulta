@@ -5,7 +5,10 @@ import {
     PrimaryGeneratedColumn,
     UpdateDateColumn,
     CreateDateColumn,
+    OneToOne,
+    JoinColumn,
 } from 'typeorm';
+import { Cliente } from './cliente.entity';
 
 @Index('pkey_id_usuario', ['id'], { unique: true })
 @Entity('usuarios', { schema: 'public' })
@@ -14,12 +17,12 @@ export class Usuario {
     id: number;
 
     @Column({
-        name: 'nome_completo',
+        name: 'email',
         type: 'varchar',
         length: 255,
         nullable: false,
     })
-    nome: string;
+    email: string;
 
     @Column({
         name: 'senha_hash',

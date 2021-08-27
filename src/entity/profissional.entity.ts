@@ -10,6 +10,7 @@ import {
     OneToMany,
 } from 'typeorm';
 import { Atendimento } from './atendimento.entity';
+import { Cliente } from './cliente.entity';
 import { ConselhoRegional } from './conselhoRegional.entity';
 import { Endereco } from './endereco.entity';
 import { Especialidade } from './especialidade.entity';
@@ -60,41 +61,49 @@ export class Profissional {
     })
     public duracaoAtendimento: string;
 
-    @OneToOne(() => Endereco, () => Profissional, { eager: true })
+    @OneToOne((type) => Endereco, (endereco) => endereco.id, { eager: true })
     @JoinColumn([{ name: 'fk_id_endereco', referencedColumnName: 'id' }])
     public endereco: Endereco;
 
-    @OneToOne(() => Usuario, () => Profissional, { eager: true })
+    @OneToOne((type) => Usuario, (usuario) => usuario.id, { eager: true })
     @JoinColumn([{ name: 'fk_id_usuario', referencedColumnName: 'id' }])
     public usuario: Usuario;
 
-    @OneToOne(() => HorarioAtendimento, () => Profissional, { eager: true })
-    @JoinColumn([
-        { name: 'fk_id_horario_atendimento', referencedColumnName: 'id' },
-    ])
-    public horarioAtendimento: HorarioAtendimento;
-
-    @OneToOne(() => Especialidade, () => Profissional, { eager: true })
+    @OneToOne((type) => Especialidade, (especialidade) => especialidade.id, {
+        eager: true,
+    })
     @JoinColumn([{ name: 'fk_id_especialidade', referencedColumnName: 'id' }])
     public especialidade: Especialidade;
 
-    @OneToOne(() => ConselhoRegional, () => Profissional, { eager: true })
+    @OneToOne((type) => ConselhoRegional, { eager: true })
     @JoinColumn([
         { name: 'fk_id_conselho_regional', referencedColumnName: 'id' },
     ])
     public consolheRegional: ConselhoRegional;
 
-    @OneToOne(() => UFConselho, () => Profissional, { eager: true })
+    @OneToOne((type) => UFConselho, {
+        eager: true,
+    })
     @JoinColumn([{ name: 'fk_id_uf_conselho', referencedColumnName: 'id' }])
     public ufConselho: UFConselho;
 
-    @OneToMany(() => HorarioAtendimento, () => Profissional, { eager: true })
+    @OneToMany(
+        (type) => HorarioAtendimento,
+        (horarioAtendimento) => horarioAtendimento.profissional,
+        { eager: true },
+    )
     @JoinColumn([
         { name: 'fk_id_horario_atendimento', referencedColumnName: 'id' },
     ])
     horariosAtendimentos: HorarioAtendimento[];
 
-    @OneToMany(() => Atendimento, () => Profissional, { eager: true })
+    @OneToMany(
+        (type) => Atendimento,
+        (atendimento) => atendimento.profissional,
+        {
+            eager: true,
+        },
+    )
     @JoinColumn([
         { name: 'fk_id_profissional_atendimento', referencedColumnName: 'id' },
     ])

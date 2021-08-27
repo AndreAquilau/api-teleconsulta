@@ -37,7 +37,10 @@ export class HorarioAtendimento {
     })
     public horarioFim: string;
 
-    @ManyToOne(() => Profissional, () => HorarioAtendimento)
+    @ManyToOne(
+        (type) => Profissional,
+        (profissional) => profissional.horariosAtendimentos,
+    )
     @JoinColumn([{ name: 'fk_id_profissional', referencedColumnName: 'id' }])
     profissional: Profissional;
 

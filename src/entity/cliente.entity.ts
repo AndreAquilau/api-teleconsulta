@@ -66,15 +66,17 @@ export class Cliente {
     })
     public dataNascimento: Date;
 
-    @OneToOne(() => Endereco, () => Cliente, { eager: true })
+    @OneToOne((type) => Endereco, { eager: true })
     @JoinColumn([{ name: 'fk_id_endereco', referencedColumnName: 'id' }])
     public endereco: Endereco;
 
-    @OneToOne(() => Usuario, () => Cliente, { eager: true })
+    @OneToOne((type) => Usuario, { eager: true })
     @JoinColumn([{ name: 'fk_id_usuario', referencedColumnName: 'id' }])
     public usuario: Usuario;
 
-    @OneToMany(() => Atendimento, () => Cliente, { eager: true })
+    @OneToMany((type) => Atendimento, (atendimento) => atendimento.cliente, {
+        eager: true,
+    })
     @JoinColumn([
         { name: 'fk_id_cliente_atendimento', referencedColumnName: 'id' },
     ])
