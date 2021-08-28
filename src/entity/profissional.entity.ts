@@ -59,7 +59,7 @@ export class Profissional {
         type: 'time without time zone',
         nullable: true,
     })
-    public duracaoAtendimento: string;
+    public duracaoAtendimento: Date;
 
     @OneToOne((type) => Endereco, (endereco) => endereco.id, { eager: true })
     @JoinColumn([{ name: 'fk_id_endereco', referencedColumnName: 'id' }])

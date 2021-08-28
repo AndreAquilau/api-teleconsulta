@@ -11,6 +11,7 @@ import {
     HttpStatus,
     HttpCode,
     Logger,
+    NotFoundException,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { Observable } from 'rxjs';

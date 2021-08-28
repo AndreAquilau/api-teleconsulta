@@ -12,6 +12,12 @@ import {
 import { Cliente } from './cliente.entity';
 import { Profissional } from './profissional.entity';
 
+enum SituacaoAtendimento {
+    PENDENTE = 'Pendente',
+    CANCELADO = 'Cancelado',
+    ATENDIDO = 'Atendido',
+}
+
 @Index('pkey_id_atendimento', ['id'], { unique: true })
 @Entity('atendimentos', { schema: 'public' })
 export class Atendimento {
@@ -25,6 +31,13 @@ export class Atendimento {
         nullable: true,
     })
     public linkAtendimento: string;
+
+    @Column({
+        name: 'data_agendamento',
+        type: 'timestamp',
+        nullable: true,
+    })
+    public dataAgendamento: Date;
 
     @Column({
         name: 'datetime_ini',
@@ -41,25 +54,13 @@ export class Atendimento {
     public datetimeFim: Date;
 
     @Column({
-        name: 'atendimento_inicializado',
-        type: 'boolean',
+        name: 'atendimento_situacao',
+        type: 'enum',
         nullable: true,
+        enum: SituacaoAtendimento,
+        default: SituacaoAtendimento.PENDENTE,
     })
     public atendimentoInicializado: boolean;
-
-    @Column({
-        name: 'atendimento_cancelado',
-        type: 'boolean',
-        nullable: true,
-    })
-    public atendimentoConcel: boolean;
-
-    @Column({
-        name: 'atendimento_finalizado',
-        type: 'boolean',
-        nullable: true,
-    })
-    public atendimentoFinalizado: boolean;
 
     @ManyToOne((type) => Profissional, (profissional) => profissional.id)
     @JoinColumn([
