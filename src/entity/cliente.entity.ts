@@ -25,7 +25,7 @@ export class Cliente {
         length: 255,
         nullable: false,
     })
-    public nome_completo: string;
+    public nomeCompleto: string;
 
     @Column({
         name: 'cpf',
@@ -87,12 +87,12 @@ export class Cliente {
         type: 'timestamp',
         default: 'now()',
     })
-    public readonly created_At: Date;
+    public readonly createdAt: Date;
 
     @UpdateDateColumn({
         name: 'updated_At',
         type: 'timestamp',
         default: 'now()',
     })
-    public readonly upated_date: Date;
+    public readonly updatedAt: Date;
 }

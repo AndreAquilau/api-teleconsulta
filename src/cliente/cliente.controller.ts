@@ -2,20 +2,19 @@ import {
     Controller,
     Delete,
     Get,
-    NotImplementedException,
     Param,
     Post,
     Put,
     Req,
     Res,
     HttpStatus,
-    HttpCode,
     Logger,
-    NotFoundException,
+    Body,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
-import { Observable } from 'rxjs';
 import { ClienteService } from './cliente.service';
+import { CreateClienteDTO } from './dto/createCliente.dto';
+import { UpdateClienteDTO } from './dto/updateCliente.dto';
 
 @Controller('clientes')
 export class ClienteController {
@@ -43,31 +42,104 @@ export class ClienteController {
     }
 
     @Get(':id')
-    public findById(@Param('id') id: string) {
-        throw new NotImplementedException();
+    public async findById(
+        @Param('id') id: number,
+        @Req() request: Request,
+        @Res() response: Response,
+    ) {
+        try {
+            const cliente = await this.clienteService.findById(id);
+
+            return response.status(HttpStatus.OK).json(cliente);
+        } catch (ex) {
+            response.status(HttpStatus.EXPECTATION_FAILED);
+
+            return response.json({
+                statusCode: response.statusCode,
+                message: ex.message,
+            });
+        } finally {
+            Logger.log(
+                `${request.url}`,
+                `Request Cliente ${response.statusCode}`,
+            );
+        }
     }
 
     @Post()
-    public store(
+    public async store(
+        @Body() body: CreateClienteDTO,
         @Req() request: Request,
         @Res() response: Response,
-    ): Observable<any> {
-        throw new NotImplementedException();
+    ) {
+        try {
+            const cliente = await this.clienteService.create(body);
+
+            return response.status(HttpStatus.OK).json(cliente);
+        } catch (ex) {
+            response.status(HttpStatus.EXPECTATION_FAILED);
+
+            return response.json({
+                statusCode: response.statusCode,
+                message: ex.message,
+            });
+        } finally {
+            Logger.log(
+                `${request.url}`,
+                `Request Cliente ${response.statusCode}`,
+            );
+        }
     }
 
-    @Put()
-    public update(
-        @Req() request: Request,
+    @Put(':id')
+    public async update(
+        @Param('id') id: number,
+        @Body() body: UpdateClienteDTO,
+        @Req()
+        request: Request,
         @Res() response: Response,
-    ): Observable<any> {
-        throw new NotImplementedException();
+    ) {
+        try {
+            const cliente = await this.clienteService.update(id, body);
+
+            return response.status(HttpStatus.OK).json(cliente);
+        } catch (ex) {
+            response.status(HttpStatus.EXPECTATION_FAILED);
+
+            return response.json({
+                statusCode: response.statusCode,
+                message: ex.message,
+            });
+        } finally {
+            Logger.log(
+                `${request.url}`,
+                `Request Cliente ${response.statusCode}`,
+            );
+        }
     }
 
-    @Delete()
-    public delete(
+    @Delete(':id')
+    public async delete(
+        @Param('id') id: number,
         @Req() request: Request,
         @Res() response: Response,
-    ): Observable<any> {
-        throw new NotImplementedException();
+    ) {
+        try {
+            await this.clienteService.delete(id);
+
+            return response.status(HttpStatus.OK).end();
+        } catch (ex) {
+            response.status(HttpStatus.EXPECTATION_FAILED);
+
+            return response.json({
+                statusCode: response.statusCode,
+                message: ex.message,
+            });
+        } finally {
+            Logger.log(
+                `${request.url}`,
+                `Request Cliente ${response.statusCode}`,
+            );
+        }
     }
 }
